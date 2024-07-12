@@ -14,4 +14,3 @@ from .sexy import *
 from .afk import *
 from .broadcast import *
 from .imposter import *
-from .upscale import *
