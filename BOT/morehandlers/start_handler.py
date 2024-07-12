@@ -18,7 +18,7 @@ db = mongo_client["THE-BOT"]
 users_collection = db["USERS"]
 
 # Define versions
-VERSION = "1.0.1"  # Update this as per your bot's version
+VERSION = "1.0.5"  # Update this as per your bot's version
 PYTHON_VERSION = sys.version.split(" ")[0]
 PYROGRAM_VERSION = pyrogram.__version__
 
