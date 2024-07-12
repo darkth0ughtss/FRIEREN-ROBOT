@@ -15,7 +15,7 @@ def owner_filter(_, __, message):
 @bot.on_message(filters.command("restart") & filters.create(owner_filter))
 def restart_bot(client, message):
     message.reply_text("Restarting bot...")
-    os.execlp("python3", "python3", "-m", "BOT.main")
+    os.execlp("python3", "python3", "-m", "BOT")
 
 @bot.on_message(filters.command("logs") & filters.create(owner_filter))
 def send_logs(client, message):

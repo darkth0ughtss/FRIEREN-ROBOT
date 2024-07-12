@@ -53,7 +53,7 @@ FEATURE_DETAILS = {
     "𝗦𝗢𝗡𝗚": "Search and download songs from YouTube with /song 'name'.",
     "𝗚𝗔𝗠𝗘𝗦": "Start games, bet on coin toss, view leaderboard with commands like /tto, /bet, /topboard, etc. You can also manage virtual stocks with /buystock to buy stocks, /sellstock to sell stocks, /viewmarket to view the market, /viewportfolio to check your portfolio, /petshop to visit the pet shop, /pets to view your pet's information, /profile to view your profile, and /setpfp to set your profile picture. Use /dice for betting on dice roll, /wallet to check your balance, and /bank to manage your bank with commands like deposit, withdraw, and balance.",    "𝗙𝗨𝗡": "Interact with fun commands like /slap, /hug, /kiss, etc.",
     "𝗨𝗧𝗜𝗟𝗦": "You can use commands like /kiss /hug /sex /kickk /slap in group chats.",
-    "𝗪𝗜𝗦𝗣𝗛𝗘𝗥": "Send private 'whispers' using /whisper '@username message'. Start with '@botusername' in any chat to activate inline queries.",
+    "𝗪𝗜𝗦𝗣𝗛𝗘𝗥": "Send private whispers '@botusername' in any chat to activate inline queries.",
     "𝗟𝗬𝗥𝗜𝗖𝗦": "Fetch song lyrics with /lyrics 'song_name'.",
     "𝗪𝗘𝗕𝗦𝗦": "Take screenshots of websites with /ss 'website_link'.",
     "𝗠𝗔𝗧𝗛": "Perform math operations with commands like /add, /substract, /multiply, etc.",
@@ -61,7 +61,7 @@ FEATURE_DETAILS = {
 }
 
 
-BUTTONS_PER_PAGE = 9
+BUTTONS_PER_PAGE = 12
 BUTTONS_PER_ROW = 3
 
 def get_feature_buttons(page=0):

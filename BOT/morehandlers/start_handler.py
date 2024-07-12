@@ -4,7 +4,7 @@ import asyncio
 import random
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
-from ..imgs_config import get_random_start_image
+from ..imgs_config import start_images , sticker_ids
 from ..bot import bot
 from pymongo import MongoClient
 from ..config import MONGO_URL
@@ -25,40 +25,23 @@ PYROGRAM_VERSION = pyrogram.__version__
 # Uptime calculation
 start_time = time.time()
 
-@bot.on_message(filters.command("start"))
-async def start_handler(client: Client, message: Message):
-    user_first_name = message.from_user.first_name
+@bot.on_message(filters.command("start") & filters.private)
+async def start_command(client, message):
     user_id = message.from_user.id
-
+    user_first_name = message.from_user.first_name
+    random_sticker = random.choice(sticker_ids)
+    random_image = random.choice(start_images)
+    
+    # Delete the start command received from the user
+    await message.delete()
+    
     # Save user ID to the USERS collection
     if not users_collection.find_one({"user_id": user_id}):
         users_collection.insert_one({"user_id": user_id, "first_name": user_first_name})
-
-    # Delete the /start command message sent by the user
-    await message.delete()
-
-    # List of possible captions
-    captions = [
-        (
-            f"๏ 𝙾𝚔𝚊𝚎𝚛𝚒, 𝙸'𝚖 [{client.me.first_name}](tg://user?id={client.me.id})\n♥ 𝙸𝚝'𝚜 𝚜𝚘 𝚐𝚘𝚘𝚍 𝚝𝚘 𝚜𝚎𝚎 𝚢𝚘𝚞.\n\n"
-            "➻ 𝙻𝚎𝚝'𝚜 𝚎𝚖𝚋𝚊𝚛𝚔 𝚘𝚗 𝚊 𝚗𝚎𝚠 𝚊𝚍𝚟𝚎𝚗𝚝𝚞𝚛𝚎 𝚝𝚘𝚐𝚎𝚝𝚑𝚎𝚛. "
-            "𝙸'𝚖 𝚑𝚎𝚛𝚎 𝚝𝚘 𝚊𝚜𝚜𝚒𝚜𝚝 𝚢𝚘𝚞 𝚠𝚒𝚝𝚑 𝚊𝚗𝚢𝚝𝚑𝚒𝚗𝚐 𝚢𝚘𝚞 𝚗𝚎𝚎𝚍.\n\n\n"
-            "☘️ 𝙲𝚑𝚎𝚌𝚔 𝚖𝚢 𝚌𝚘𝚖𝚖𝚊𝚗𝚍𝚜 𝚋𝚎𝚕𝚘𝚠 ☘️"
-        ),
-        (
-            f"๏ 𝙷𝚎𝚢 𝚂𝚎𝚗𝚙𝚊𝚒, 𝚆𝚎𝚕𝚌𝚘𝚖𝚎 𝚝𝚘 [{client.me.first_name}](tg://user?id={client.me.id})\n♥ 𝙳𝚎𝚕𝚒𝚐𝚑𝚝𝚎𝚍 𝚝𝚘 𝚜𝚎𝚎 𝚢𝚘𝚞.\n\n"
-            "➻ 𝙻𝚎𝚝'𝚜 𝚋𝚎𝚐𝚒𝚗 𝚊 𝚗𝚎𝚠 𝚓𝚘𝚞𝚛𝚗𝚎𝚢 𝚝𝚘𝚐𝚎𝚝𝚑𝚎𝚛. "
-            "𝙸'𝚖 𝚑𝚎𝚛𝚎 𝚝𝚘 𝚑𝚎𝚕𝚙 𝚢𝚘𝚞 𝚠𝚒𝚝𝚑 𝚊𝚗𝚢 𝚚𝚞𝚎𝚜𝚝𝚒𝚘𝚗𝚜 𝚢𝚘𝚞 𝚖𝚊𝚢 𝚑𝚊𝚟𝚎.\n\n\n"
-            "☘️ 𝙲𝚑𝚎𝚌𝚔 𝚖𝚢 𝚌𝚘𝚖𝚖𝚊𝚗𝚍𝚜 𝚋𝚎𝚕𝚘𝚠 ☘️"
-        ),
-        (
-            f"๏ 𝙷𝚒 𝚂𝚎𝚗𝚙𝚊𝚒, 𝙸'𝚖 [{client.me.first_name}](tg://user?id={client.me.id})\n♥ 𝙳𝚒𝚍 𝚢𝚘𝚞 𝚖𝚒𝚜𝚜 𝚖𝚎? 𝙸'𝚟𝚎 𝚖𝚒𝚜𝚜𝚎𝚍 𝚢𝚘𝚞!\n\n"
-            "➻ 𝙻𝚎𝚝'𝚜 𝚜𝚝𝚊𝚛𝚝 𝚘𝚞𝚛 𝚓𝚘𝚞𝚛𝚗𝚎𝚢 𝚊𝚐𝚊𝚒𝚗. "
-            "𝙸'𝚖 𝚊𝚕𝚠𝚊𝚢𝚜 𝚑𝚎𝚛𝚎 𝚝𝚘 𝚊𝚜𝚜𝚒𝚜𝚝 𝚢𝚘𝚞 𝚠𝚒𝚝𝚑 𝚠𝚑𝚊𝚝𝚎𝚟𝚎𝚛 𝚢𝚘𝚞 𝚗𝚎𝚎𝚍.\n\n\n"
-            "☘️ 𝙲𝚑𝚎𝚌𝚔 𝚖𝚢 𝚌𝚘𝚖𝚖𝚊𝚗𝚍𝚜 𝚋𝚎𝚕𝚘𝚠 ☘️"
-        )
-    ]
-
+    
+    # Step 0: Send a random sticker
+    await message.reply_sticker(random_sticker)
+    
     # Step 1: Send "𝚂𝚝𝚊𝚛𝚝𝚒𝚗𝚐....."
     start_msg = await message.reply_text("𝚂𝚝𝚊𝚛𝚝𝚒𝚗𝚐.....")
     await asyncio.sleep(0.35)
@@ -78,30 +61,36 @@ async def start_handler(client: Client, message: Message):
 
     # Step 5: Edit the emoji to "✨"
     await emoji_msg.edit_text("✨")
-    await asyncio.sleep(0.35)
-
-    # Step 6: Delete the emoji message and send random start image
+    # Delete the emoji_msg
     await emoji_msg.delete()
-    start_image = get_random_start_image()
-    caption = random.choice(captions)  # Select a random caption
+    await asyncio.sleep(0.2)
 
+    # Delete the emoji_msg
+    await emoji_msg.delete()
+
+    # Final step: Send the welcome message with a random image
+    client_me = await client.get_me()
+    welcome_text = (
+        f'[๏]({random_image}) 𝙾𝚔𝚊𝚎𝚛𝚒, 𝙸\'𝚖 '
+        f'{client_me.first_name}!\n'
+        '♥ 𝚂𝚘 𝚐𝚕𝚊𝚍 𝚝𝚘 𝚜𝚎𝚎 𝚢𝚘𝚞 𝚑𝚎𝚛𝚎.\n'
+        '✨ 𝙸\'𝚖 𝚊𝚗 𝙰𝙸-𝚙𝚘𝚠𝚎𝚛𝚎𝚍 𝚃𝚎𝚕𝚎𝚐𝚛𝚊𝚖 𝚋𝚘𝚝, 𝚑𝚎𝚛𝚎 𝚝𝚘 𝚊𝚜𝚜𝚒𝚜𝚝 𝚢𝚘𝚞 𝚠𝚒𝚝𝚑 𝚊𝚕𝚕 𝚢𝚘𝚞𝚛 𝚗𝚎𝚎𝚍𝚜.\n\n'
+        '➻ 𝙲𝚑𝚎𝚌𝚔 𝚘𝚞𝚝 𝚖𝚢 𝚌𝚘𝚖𝚖𝚊𝚗𝚍𝚜 𝚋𝚎𝚕𝚘𝚠 𝚝𝚘 𝚜𝚎𝚎 𝚠𝚑𝚊𝚝 𝙸 𝚌𝚊𝚗 𝚍𝚘!'
+    )
     buttons = [
         [InlineKeyboardButton("💫 𝘈𝘋𝘋 𝘔𝘌 𝘛𝘖 𝘠𝘖𝘜𝘙 𝘎𝘙𝘖𝘜𝘗 💫", url="https://telegram.dog/frierenzbot?startgroup=true")],
         [
             InlineKeyboardButton("✨𝘊𝘖𝘔𝘔𝘈𝘕𝘋𝘚 ✨", callback_data="commands"),
             InlineKeyboardButton("🌿𝘚𝘶𝘱𝘱𝘰𝘳𝘵 🌿", url="https://t.me/DominosXd")
         ],
-        [ 
+        [
             InlineKeyboardButton("🔔𝘜𝘱𝘥𝘢𝘵𝘦𝘴🔔", url="https://t.me/DominosNetwork"),
             InlineKeyboardButton("ℹ️ 𝘉𝘖𝘛-𝘐𝘕𝘍𝘖", callback_data="bot_info")
         ]
     ]
-    await client.send_photo(
-        chat_id=message.chat.id,
-        photo=start_image,
-        caption=caption,
-        reply_markup=InlineKeyboardMarkup(buttons)
-    )
+    reply_markup = InlineKeyboardMarkup(buttons)
+    await message.reply_text(welcome_text, reply_markup=reply_markup)
+
  
 @bot.on_callback_query(filters.regex("bot_info"))
 async def bot_info_callback(client, q):
