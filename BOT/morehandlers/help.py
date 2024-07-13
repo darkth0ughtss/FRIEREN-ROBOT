@@ -44,7 +44,7 @@ FEATURE_DETAILS = {
     "𝗣𝗜𝗡𝗧𝗘𝗥𝗘𝗦𝗧": "Download Pinterest media with /pnt 'link'.",
     "𝗦𝗘𝗔𝗥𝗖𝗛": "Search news, web, and images with /bingsearch and /img. Use /news for keyword-based news.",
     "𝗦𝗣𝗢𝗧𝗜𝗙𝗬": "Access Spotify features with commands like /top_playlist, /sp_daily, /sp_trending, etc.",
-    "𝗧𝗘𝗟𝗘𝗚𝗥𝗔𝗣𝗛": "Upload replied images to Telegraph with /up or /upvid for videos.",
+    "𝗧𝗘𝗟𝗘𝗚𝗥𝗔𝗣𝗛": "Upload replied images to Telegraph with /up.",
     "𝗧𝗥𝗔𝗡𝗦𝗟𝗔𝗧𝗘": "Translate text with /tr 'target_lang'. Detects and translates from replied text.",
     "𝗧𝗧𝗦": "Convert text to speech (TTS) in English with /tts 'text'.",
     "𝗗𝗜𝗖𝗧𝗜𝗢𝗡𝗔𝗥𝗬": "Search Urban Dictionary with /ud 'term' for definitions.",

@@ -96,15 +96,12 @@ wish_videos = [
 
 
 start_images = [
-    "https://telegra.ph/file/5dfedbdece53f3ed8bb0e.jpg",
-    "https://telegra.ph/file/6e55d95ec944519be533e.jpg",
-    "https://telegra.ph/file/d365f488fe3a08a81e94a.jpg",
-    "https://telegra.ph/file/25caf1bfc982992256601.jpg",
-    "https://telegra.ph/file/793e5ae786fffdfbab280.jpg",
-    "https://telegra.ph/file/810593c82365d61731698.jpg",
-    "https://telegra.ph/file/e44191cd91468f0df2dac.jpg",
-    "https://telegra.ph/file/d835dcba0de2c5d3e6be6.jpg",
-    "https://telegra.ph/file/8727f21dd9e89fc912436.jpg"
+    "https://telegra.ph/file/332d73be0d9ed89530032.jpg",
+    "https://telegra.ph/file/d2ce98708c451b2ab8f4a.jpg",
+    "https://telegra.ph/file/88e49e34c67873e694139.jpg",
+    "https://telegra.ph/file/562a3c15e21c9c512890c.jpg",
+    "https://telegra.ph/file/6eb934b77964cb96f395f.jpg",
+    "https://telegra.ph/file/36d7bbab59d2b77c7e922.jpg"
 ]
 
 
@@ -113,11 +110,11 @@ def get_random_start_image():
     return random.choice(start_images)
 
 help_command_urls = [
-    "https://telegra.ph/file/746ad98cd6ff12ae5dc69.jpg",
-    "https://telegra.ph/file/7fce9e95d2c2cf5a11fe9.jpg",
-    "https://telegra.ph/file/87ce3c0e0bd33b9df547c.jpg",
-    "https://telegra.ph/file/0ddf70de8414663478a65.jpg",
-    "https://telegra.ph/file/84fc2cd374c6a3d74e501.jpg"
+    "https://telegra.ph/file/b63efe1a43972d3db956c.jpg",
+    "https://telegra.ph/file/2750d60babc3b2adb7f03.jpg",
+    "https://telegra.ph/file/58ccd2638f5c477f2811d.jpg",
+    "https://telegra.ph/file/98158d0a330af3e8f5d3c.jpg",
+    "https://telegra.ph/file/f3a1f73bf656e30eb9a9e.jpg"
 ]
 
 
