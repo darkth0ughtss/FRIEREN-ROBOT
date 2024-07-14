@@ -8,6 +8,7 @@ from .morehandlers import *
 from .dev_cmd import *
 from .quizbot import *
 from .group import *
+from .helper import *
 
 # Configure logging (optional, if not configured elsewhere)
 logging.basicConfig(level=logging.INFO)

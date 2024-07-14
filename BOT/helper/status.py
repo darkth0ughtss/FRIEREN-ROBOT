@@ -8,9 +8,8 @@ from pyrogram import Client
 from pyrogram.types import Message
 from pyrogram.enums import ChatMemberStatus, ChatType
 
-from ..bot import BOT_ID
 from ..bot import bot as app
-from ..config import SUDO
+from ..config import BOT_ID , OWNER_ID as SUDO
 
 COMMANDERS = [ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.OWNER]
 

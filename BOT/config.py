@@ -14,8 +14,10 @@ genius_api_token = "SjWQj7eNituIpjJwD_cPey40Kx3cHZmTcVdaewuP61nYPyd5f623zMiKLQvo
 wibu_api_key = "WIBUAPI-qgU5lmAoKGHSTDqDZ7JQsqtmj6l7YSVr2AfsU-mcvTHNC41621dWp999Ygn85VZicw5stPUflkp7iNMVE47ADGPJV0DGiPQTo6BW-A"
 OWNER_IDS = [5630057244, 6682158027]
 # Initialize the SUDO list
-SUDO = list({int(x) for x in ("").split()})
+SUDO = [5630057244, 987654321]  # Example sudo user IDs
 
-# Add the new SUDO user
-SUDO.append(5630057244)
 COMMAND_HANDLER = ". /".split() # COMMAND HANDLER
+BOT_ID = 6617412135
+TIME_ZONE = "Asia/Kolkata" # YOUR TIME ZONE
+OWNERR_ID = [5630057244, 987654321]  # List of owner user IDs
+

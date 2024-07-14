@@ -8,7 +8,10 @@ from pymongo.errors import PyMongoError
 
 client = AsyncIOMotorClient(MONGO_URL)
 db_name = "WAIFUBOT"  # Replace with your actual database name
+DBNAME = "HUTAO"
 db = client[db_name]
+dbname = client[DBNAME]
+
 
 async def setup_indexes():
     await db.chats.create_index([("chat_id", ASCENDING)], unique=True)
