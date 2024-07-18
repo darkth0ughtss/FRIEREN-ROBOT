@@ -27,3 +27,4 @@ yt-dlp
 youtube-search-python
 lyricsgenius
 spotipy
+gtts
