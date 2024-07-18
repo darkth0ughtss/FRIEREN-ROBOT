@@ -17,3 +17,13 @@ emojis
 blackpink
 gpytranslate
 lexica-api
+speedtest-cli
+pymongo
+motor
+python-arq
+playwright
+shortuuid
+yt-dlp
+youtube-search-python
+lyricsgenius
+spotipy

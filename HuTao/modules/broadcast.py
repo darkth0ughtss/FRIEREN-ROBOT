@@ -1,33 +1,78 @@
-import asyncio
-from HuTao.database.users_db import *
-from HuTao import app, OWNER
-from pyrogram import filters
+from pyrogram import Client, filters
+from pyrogram.types import Message
+from pymongo import MongoClient
+from ..config import MONGO_URL, OWNER_ID  # Ensure config is correct and OWNER_ID is a list of IDs
+from .. import app as bot
+# Initialize MongoDB client
+mongo_client = MongoClient(MONGO_URL)
+db = mongo_client["THE-BOT"]
+users_collection = db["USERS"]
+groups_collection = db["GROUPS"]
 
-@app.on_message(filters.command("pcast") & filters.user(OWNER), group=-50)
-async def broadcast(_, message):
+@bot.on_message(filters.command("bcast") & filters.user(OWNER_ID))
+async def handle_broadcast(client: Client, message: Message):
+    # Check if the message is a reply to another message
     if message.reply_to_message:
-      to_send=message.reply_to_message.id
-    if not message.reply_to_message:
-      return await message.reply_text("Reply To Some Post To Broadcast")
-    chats = await get_all_chat_ids() or []
-    users = await get_all_user_ids() or []
-    print(chats)
-    print(users)
-    failed = 0
-    for chat in chats:
-      try:
-        await app.forward_messages(chat_id=int(chat), from_chat_id=message.chat.id, message_ids=to_send)
-        await asyncio.sleep(1)
-      except Exception:
-        failed += 1
-    
-    failed_user = 0
-    for user in users:
-      try:
-        await app.forward_messages(chat_id=int(user), from_chat_id=message.chat.id, message_ids=to_send)
-        await asyncio.sleep(1)
-      except Exception as e:
-        failed_user += 1
+        # Check if the replied message contains text or photo with or without caption
+        if message.reply_to_message.text:
+            # Extract the broadcast message from the replied message
+            broadcast_text = message.reply_to_message.text
+            # Retrieve all user IDs from the database
+            user_ids = [doc['user_id'] for doc in users_collection.find({}, {'_id': 0, 'user_id': 1})]
+            # Retrieve all group IDs from the database
+            group_ids = [doc['chat_id'] for doc in groups_collection.find({}, {'_id': 0, 'chat_id': 1})]
 
+            # Send the broadcast message to users
+            for user_id in user_ids:
+                try:
+                    await client.send_message(user_id, broadcast_text)
+                except Exception as e:
+                    print(f"Error sending message to user {user_id}: {e}")
 
-    await message.reply_text("Broadcast complete. {} groups failed to receive the message, probably due to being kicked. {} users failed to receive the message, probably due to being banned.".format(failed, failed_user))
+            # Send the broadcast message to groups
+            for group_id in group_ids:
+                try:
+                    await client.send_message(group_id, broadcast_text)
+                except Exception as e:
+                    print(f"Error sending message to group {group_id}: {e}")
+
+            # Calculate the total count of users and groups
+            total_count = len(user_ids) + len(group_ids)
+
+            # Send confirmation message to the sudo user with total count
+            confirmation_message = f"Broadcast sent successfully!\n\nMessages sent to {total_count} users and groups."
+            await message.reply_text(confirmation_message)
+        
+        elif message.reply_to_message.photo:
+            # Extract the photo file ID and caption from the replied message
+            photo_file_id = message.reply_to_message.photo.file_id
+            caption = message.reply_to_message.caption
+            
+            # Retrieve all user IDs from the database
+            user_ids = [doc['user_id'] for doc in users_collection.find({}, {'_id': 0, 'user_id': 1})]
+            # Retrieve all group IDs from the database
+            group_ids = [doc['chat_id'] for doc in groups_collection.find({}, {'_id': 0, 'chat_id': 1})]
+
+            # Send the photo with caption to users
+            for user_id in user_ids:
+                try:
+                    await client.send_photo(user_id, photo_file_id, caption=caption)
+                except Exception as e:
+                    print(f"Error sending photo to user {user_id}: {e}")
+
+            # Send the photo with caption to groups
+            for group_id in group_ids:
+                try:
+                    await client.send_photo(group_id, photo_file_id, caption=caption)
+                except Exception as e:
+                    print(f"Error sending photo to group {group_id}: {e}")
+
+            # Calculate the total count of users and groups
+            total_count = len(user_ids) + len(group_ids)
+
+            # Send confirmation message to the sudo user with total count
+            confirmation_message = f"Broadcast sent successfully!\n\nPhotos sent to {total_count} users and groups."
+            await message.reply_text(confirmation_message)
+
+    else:
+        await message.reply_text("🛑 Please reply to a message containing the text or photo you want to broadcast.")
